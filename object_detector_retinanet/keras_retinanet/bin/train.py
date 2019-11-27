@@ -63,9 +63,9 @@ def makedirs(path):
 def get_session():
     """ Construct a modified tf session.
     """
-    config = tf.ConfigProto()
+    config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
-    return tf.Session(config=config)
+    return tf.compat.v1.Session(config=config)
 
 
 def model_with_weights(model, weights, skip_mismatch):
@@ -377,7 +377,8 @@ def main(args=None):
         os.environ["CUDA_VISIBLE_DEVICES"] = str(666)
     else:
         os.environ["CUDA_VISIBLE_DEVICES"] = gpu_num
-    keras.backend.tensorflow_backend.set_session(get_session())
+    #keras.backend.tensorflow_backend.set_session(get_session())
+    tf.compat.v1.keras.backend.set_session(get_session())
 
     # Weights and logs saves in a new locations
     stmp = time.strftime("%c").replace(":", "_").replace(" ", "_")
